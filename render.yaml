@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: qt-seize-api
+    runtime: node
+    plan: free
+
+    buildCommand: npm install
+
+    startCommand: npx tsx server.ts

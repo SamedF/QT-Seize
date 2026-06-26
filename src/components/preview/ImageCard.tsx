@@ -1,5 +1,5 @@
 import type { ImageFile } from "../../types/ImageFile";
-import { Trash2, ImageIcon } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Props {

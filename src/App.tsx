@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useResize } from "./hooks/useResize";
 import UploadZone from "./components/upload/UploadZone";
 import ImageGrid from "./components/preview/ImageGrid";
 import SettingsPanel from "./components/settings/SettingsPanel";
@@ -10,17 +10,55 @@ import type { ResizeSettings } from "./types/ResizeSettings";
 export default function App() {
 
   const { images, addFiles, removeImage } = useImages();
-
+  const { resize, loading } = useResize();
   const [settings, setSettings] = useState<ResizeSettings>({
-    width:1920,
-    height:1080,
-    format:"jpeg",
-    quality:100,
-    aiUpscale:true,
-    sharpen:true,
-    preserveAspect:true
+    width: 1920,
+    height: 1080,
+    format: "jpeg",
+    quality: 100,
+    aiUpscale: true,
+    sharpen: true,
+    preserveAspect: true
   });
+  async function handleResize() {
+    if (images.length === 0) {
+      alert("Please upload at least one image.");
+      return;
+    }
 
+    try {
+      for (const image of images) {
+        const blob = await resize(image.file, {
+          width: settings.width,
+          height: settings.height,
+          format: settings.format,
+          quality: settings.quality,
+          sharpen: settings.sharpen,
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+
+        const extension =
+          settings.format === "jpeg" ? "jpg" : settings.format;
+
+        const fileName = image.file.name.replace(/\.[^/.]+$/, "");
+
+        a.download = `${fileName}.${extension}`;
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(String(err));
+    }
+  }
   return (
 
     <main className="min-h-screen bg-background">
@@ -43,7 +81,7 @@ export default function App() {
 
           <div>
 
-            <UploadZone onFiles={addFiles}/>
+            <UploadZone onFiles={addFiles} />
 
             <ImageGrid
               images={images}
@@ -55,6 +93,8 @@ export default function App() {
           <SettingsPanel
             settings={settings}
             setSettings={setSettings}
+            onResize={handleResize}
+            loading={loading}
           />
 
         </div>

@@ -10,19 +10,32 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
     "@netlify/functions": "^5.3.0",
+    "@netlify/serverless-functions-api": "^2.16.0",
+    "@tanstack/react-query": "^5.101.1",
     "busboy": "^1.6.0",
     "clsx": "^2.1.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "framer-motion": "^12.41.0",
     "jszip": "^3.10.1",
     "lucide-react": "^1.21.0",
+    "multer": "^2.2.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-dropzone": "^15.0.0",
+    "react-hook-form": "^7.80.0",
     "react-hot-toast": "^2.6.0",
-    "sharp": "^0.35.2"
+    "sharp": "^0.35.2",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.1.0",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -31,6 +44,7 @@
     "oxlint": "^1.69.0",
     "postcss": "^8.5.15",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.22.4",
     "typescript": "~6.0.2",
     "vite": "^8.1.0"
   }

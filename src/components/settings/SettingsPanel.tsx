@@ -3,11 +3,15 @@ import type { ResizeSettings } from "../../types/ResizeSettings";
 interface Props {
   settings: ResizeSettings;
   setSettings: React.Dispatch<React.SetStateAction<ResizeSettings>>;
+  onResize: () => void;
+  loading?: boolean;
 }
 
 export default function SettingsPanel({
   settings,
   setSettings,
+  onResize,
+  loading,
 }: Props) {
   return (
     <div className="glass rounded-2xl p-6 space-y-6 h-fit">
@@ -22,10 +26,10 @@ export default function SettingsPanel({
         <input
           type="number"
           value={settings.width}
-          onChange={(e)=>
-            setSettings(prev=>({
+          onChange={(e) =>
+            setSettings(prev => ({
               ...prev,
-              width:Number(e.target.value)
+              width: Number(e.target.value)
             }))
           }
           className="mt-2 w-full bg-black rounded-lg p-3"
@@ -38,10 +42,10 @@ export default function SettingsPanel({
         <input
           type="number"
           value={settings.height}
-          onChange={(e)=>
-            setSettings(prev=>({
+          onChange={(e) =>
+            setSettings(prev => ({
               ...prev,
-              height:Number(e.target.value)
+              height: Number(e.target.value)
             }))
           }
           className="mt-2 w-full bg-black rounded-lg p-3"
@@ -58,10 +62,10 @@ export default function SettingsPanel({
 
         <select
           value={settings.format}
-          onChange={(e)=>
-            setSettings(prev=>({
+          onChange={(e) =>
+            setSettings(prev => ({
               ...prev,
-              format:e.target.value as any
+              format: e.target.value as any
             }))
           }
           className="mt-2 w-full bg-black rounded-lg p-3"
@@ -87,10 +91,10 @@ export default function SettingsPanel({
           min={50}
           max={100}
           value={settings.quality}
-          onChange={(e)=>
-            setSettings(prev=>({
+          onChange={(e) =>
+            setSettings(prev => ({
               ...prev,
-              quality:Number(e.target.value)
+              quality: Number(e.target.value)
             }))
           }
           className="w-full mt-3"
@@ -111,10 +115,10 @@ export default function SettingsPanel({
         <input
           type="checkbox"
           checked={settings.aiUpscale}
-          onChange={(e)=>
-            setSettings(prev=>({
+          onChange={(e) =>
+            setSettings(prev => ({
               ...prev,
-              aiUpscale:e.target.checked
+              aiUpscale: e.target.checked
             }))
           }
         />
@@ -128,10 +132,10 @@ export default function SettingsPanel({
         <input
           type="checkbox"
           checked={settings.sharpen}
-          onChange={(e)=>
-            setSettings(prev=>({
+          onChange={(e) =>
+            setSettings(prev => ({
               ...prev,
-              sharpen:e.target.checked
+              sharpen: e.target.checked
             }))
           }
         />
@@ -139,9 +143,11 @@ export default function SettingsPanel({
       </label>
 
       <button
-        className="w-full bg-white text-black rounded-xl py-4 font-bold"
+        onClick={onResize}
+        disabled={loading}
+        className="w-full bg-white text-black rounded-xl py-4 font-bold disabled:opacity-50"
       >
-        Resize Images
+        {loading ? "Processing..." : "Resize Images"}
       </button>
 
     </div>
